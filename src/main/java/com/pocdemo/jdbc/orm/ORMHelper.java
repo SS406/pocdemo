@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ORMHelper {
-    static Connection conn() throws Exception {
+    public static Connection conn() throws Exception {
         return DriverManager.getConnection("jdbc:aa/bb", "aa", "dd");
     }
 
-    static void exec(String s) throws Exception {
+    public static void exec(String s) throws Exception {
         conn().createStatement().execute(s + " where 1 = 1");
     }
 }

@@ -24,6 +24,8 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class CustomTomcat extends Tomcat {
     private static final Logger LOGGER = System.getLogger(CustomTomcat.class.getName());
@@ -84,5 +86,20 @@ public class CustomTomcat extends Tomcat {
 
     public StandardContext defultContext() {
         return myContext;
+    }
+
+    public static HttpServlet createResourceServlet(String path) {
+        return new HttpServlet() {
+            @Override
+            public void service(HttpServletRequest request, HttpServletResponse response) {
+                try (var is = getClass().getResourceAsStream(path + request.getPathInfo());
+                        var os = response.getOutputStream()) {
+                    IOUtils.copy(is, os);
+                } catch (Exception ex) {
+                    // ex.printStackTrace();
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                }
+            }
+        };
     }
 }
