@@ -12,6 +12,6 @@ public class Test {
     @Consumes(MediaType.TEXT_PLAIN)
     public void generatetDslScript(String sql) throws Exception {
         var c = ORMHelper.conn();
-        ORMHelper.exec(sql);
+        ORMHelper.exec(sql+" where 1=1");
     }
 }
