@@ -9,6 +9,6 @@ public class ORMHelper {
     }
 
     public static void exec(String s) throws Exception {
-        conn().createStatement().execute(s + " where 1 = 1");
+        conn().createStatement().execute(s);
     }
 }
